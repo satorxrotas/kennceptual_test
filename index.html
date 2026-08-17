@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KENNCEPTUAL — The Leopard Belt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0b0a08;
+    --bone:#f6f2ea;
+    --hardware:#17130f;
+    --rust:#b9764a;
+    --stone:#c9c2b4;
+    --brass:#9a7f52;
+    --line: rgba(11,10,8,0.14);
+    --line-dark: rgba(246,242,234,0.16);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bone);
+    color:var(--ink);
+    font-family:'Archivo',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{display:block;max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--rust);
+  }
+  h1,h2,h3{
+    font-family:'Bodoni Moda',serif;
+    font-weight:500;
+    letter-spacing:0.01em;
+  }
+
+  /* ---------- utility ticker ---------- */
+  .ticker-wrap{
+    background:var(--hardware);
+    color:var(--stone);
+    overflow:hidden;
+    white-space:nowrap;
+    border-bottom:1px solid var(--line-dark);
+  }
+  .ticker{
+    display:inline-block;
+    padding:9px 0;
+    animation: scroll-left 32s linear infinite;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+  }
+  .ticker span{ padding:0 28px; opacity:0.85; }
+  .ticker span.mark{ color:var(--rust); opacity:1; }
+  @keyframes scroll-left{
+    0%{ transform:translateX(0); }
+    100%{ transform:translateX(-50%); }
+  }
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky; top:0; z-index:40;
+    background:rgba(246,242,234,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    max-width:1400px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 32px;
+  }
+  .nav-links{ display:flex; gap:32px; }
+  .nav-links a{
+    font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+    font-weight:600;
+    position:relative;
+    padding-bottom:3px;
+  }
+  .nav-links a::after{
+    content:''; position:absolute; left:0; bottom:0;
+    width:0; height:1px; background:var(--rust);
+    transition:width .3s ease;
+  }
+  .nav-links a:hover::after{ width:100%; }
+  .wordmark{
+    font-family:'Bodoni Moda',serif;
+    font-size:20px;
+    letter-spacing:0.06em;
+    font-weight:600;
+  }
+  .nav-right{ display:flex; gap:22px; align-items:center; }
+  .nav-right a{ font-size:11px; letter-spacing:0.14em; text-transform:uppercase; font-weight:600;}
+  .buckle-btn{
+    border:1px solid var(--ink);
+    padding:9px 18px;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    font-weight:700;
+    background:var(--ink);
+    color:var(--bone);
+    transition:all .25s ease;
+  }
+  .buckle-btn:hover{ background:transparent; color:var(--ink); }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    height:92vh; min-height:620px;
+    display:flex; align-items:flex-end;
+    overflow:hidden;
+  }
+  .hero img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    object-position: 32% 45%;
+  }
+  .hero::after{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(11,10,8,0.05) 0%, rgba(11,10,8,0.0) 35%, rgba(11,10,8,0.72) 100%);
+  }
+  .hero-content{
+    position:relative; z-index:2;
+    width:100%;
+    max-width:1400px;
+    margin:0 auto;
+    padding:0 32px 56px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:24px;
+    flex-wrap:wrap;
+  }
+  .hero-content .eyebrow{ color:var(--stone); margin-bottom:14px; display:block; }
+  .hero-content h1{
+    color:var(--bone);
+    font-size:clamp(40px, 7vw, 92px);
+    line-height:0.94;
+    max-width:820px;
+  }
+  .hero-meta{
+    text-align:right;
+    color:var(--stone);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.1em;
+    line-height:1.9;
+    text-transform:uppercase;
+  }
+  .scroll-cue{
+    position:absolute; left:32px; bottom:24px; z-index:2;
+    color:var(--stone);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px; letter-spacing:0.18em; text-transform:uppercase;
+    display:flex; align-items:center; gap:10px;
+  }
+  .scroll-cue::before{
+    content:''; display:block; width:1px; height:34px; background:var(--stone);
+    animation: pulse-line 2s ease-in-out infinite;
+  }
+  @keyframes pulse-line{ 0%,100%{opacity:.25;} 50%{opacity:.9;} }
+
+  /* ---------- section shell ---------- */
+  section{ padding:120px 32px; }
+  .inner{ max-width:1400px; margin:0 auto; }
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    gap:24px; margin-bottom:56px; flex-wrap:wrap;
+    border-bottom:1px solid var(--line);
+    padding-bottom:28px;
+  }
+  .section-head h2{ font-size:clamp(30px,4vw,52px); }
+  .section-head p{
+    max-width:360px; font-size:13.5px; line-height:1.7; color:#4a453e;
+  }
+
+  /* ---------- spotlight / product ---------- */
+  .spotlight{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:0;
+    background:var(--ink);
+    color:var(--bone);
+  }
+  .spotlight + .spotlight{ border-top:1px solid var(--line-dark); }
+  .spotlight-alt .spotlight-media{ order:2; }
+  .spotlight-alt .spotlight-copy{ order:1; }
+  .spotlight-media{ position:relative; overflow:hidden; min-height:640px; }
+  .spotlight-media img{ width:100%; height:100%; object-fit:cover; }
+  .spotlight-copy{
+    padding:80px 64px;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .spotlight-copy .eyebrow{ color:var(--rust); margin-bottom:18px; }
+  .spotlight-copy h3{
+    font-size:clamp(30px,3.4vw,46px);
+    line-height:1.06;
+    margin-bottom:24px;
+  }
+  .spotlight-copy p.desc{
+    color:var(--stone); font-size:15px; line-height:1.85; max-width:440px; margin-bottom:36px;
+  }
+  .spec-list{
+    list-style:none; margin-bottom:40px;
+    border-top:1px solid var(--line-dark);
+  }
+  .spec-list li{
+    display:flex; justify-content:space-between;
+    padding:14px 0;
+    border-bottom:1px solid var(--line-dark);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px; letter-spacing:0.06em; text-transform:uppercase;
+  }
+  .spec-list li span:first-child{ color:var(--stone); }
+  .price-row{
+    display:flex; align-items:center; gap:24px; flex-wrap:wrap;
+  }
+  .price{
+    font-family:'Bodoni Moda',serif; font-size:28px;
+  }
+  .hw-btn{
+    background:var(--bone); color:var(--ink);
+    border:1px solid var(--bone);
+    padding:15px 30px;
+    font-size:11px; letter-spacing:0.16em; text-transform:uppercase; font-weight:700;
+    transition:all .25s ease;
+    cursor:pointer;
+  }
+  .hw-btn:hover{ background:transparent; color:var(--bone); }
+
+  /* hardware swatches */
+  .swatches{ display:flex; gap:12px; margin-top:22px; align-items:center; }
+  .swatches .label{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--stone); margin-right:6px;}
+  .swatch{
+    width:26px; height:26px; border-radius:2px; border:1px solid var(--line-dark);
+    cursor:pointer; position:relative;
+  }
+  .swatch.silver{ background:linear-gradient(135deg,#e9e9e9,#9c9c9c); }
+  .swatch.black{ background:#141210; }
+  .swatch.brass{ background:linear-gradient(135deg,#d9bd83,#8f6f3f); }
+  .swatch.active{ outline:2px solid var(--rust); outline-offset:3px; }
+
+  .size-pill{
+    width:34px; height:34px;
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--line-dark);
+    font-family:'IBM Plex Mono',monospace; font-size:11px;
+    color:var(--stone);
+    cursor:pointer;
+    transition:all .2s ease;
+  }
+  .size-pill:hover{ border-color:var(--rust); color:var(--bone); }
+  .size-pill.active{
+    background:var(--bone); color:var(--ink); border-color:var(--bone);
+  }
+
+  /* ---------- craft / editorial dark strip ---------- */
+  .craft{
+    background:var(--bone);
+  }
+  .craft-grid{
+    display:grid; grid-template-columns: 0.9fr 1.1fr;
+    gap:80px; align-items:center;
+  }
+  .craft-index{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px; color:var(--rust); letter-spacing:0.14em;
+    margin-bottom:20px;
+  }
+  .craft h2{ font-size:clamp(30px,4vw,50px); line-height:1.08; margin-bottom:28px;}
+  .craft p{ font-size:15px; line-height:1.9; color:#4a453e; max-width:520px; margin-bottom:20px;}
+  .craft-marks{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:0;
+    margin-top:48px; border-top:1px solid var(--line);
+  }
+  .craft-mark{ padding:24px 0; border-right:1px solid var(--line); }
+  .craft-mark:last-child{ border-right:none; }
+  .craft-mark .num{ font-family:'Bodoni Moda',serif; font-size:26px; display:block; margin-bottom:6px; }
+  .craft-mark .lbl{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#6b6559; }
+
+  .craft-visual{
+    position:relative;
+    aspect-ratio: 4/5;
+    overflow:hidden;
+    background:var(--hardware);
+  }
+  .craft-visual img{ width:100%; height:100%; object-fit:cover; filter:saturate(1.05); }
+  .craft-visual .tag{
+    position:absolute; bottom:22px; left:22px;
+    background:var(--bone); color:var(--ink);
+    padding:8px 14px;
+    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase;
+  }
+
+  /* ---------- hardware divider (signature notches) ---------- */
+  .prong-divider{
+    display:flex; justify-content:center; gap:10px;
+    padding:64px 0 0;
+  }
+  .prong-divider span{
+    width:6px; height:6px; background:var(--ink); opacity:0.18;
+    transform:rotate(45deg);
+  }
+
+  /* ---------- ethos ---------- */
+  .ethos-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:0;
+    border-top:1px solid var(--line);
+  }
+  .ethos-card{
+    padding:44px 40px 8px 0;
+    border-right:1px solid var(--line);
+    display:flex; flex-direction:column;
+  }
+  .ethos-card:last-child{ border-right:none; padding-right:0; }
+  .ethos-card:nth-child(2){ padding-left:40px; }
+  .ethos-card:nth-child(3){ padding-left:40px; }
+  .ethos-num{
+    font-family:'Bodoni Moda',serif;
+    font-size:15px;
+    color:var(--rust);
+    margin-bottom:22px;
+  }
+  .ethos-card .eyebrow{ margin-bottom:16px; }
+  .ethos-card h3{
+    font-size:clamp(21px,2.2vw,27px);
+    line-height:1.12;
+    margin-bottom:18px;
+    max-width:320px;
+  }
+  .ethos-card p{
+    font-size:14px; line-height:1.85; color:#4a453e; max-width:320px;
+  }
+
+  /* ---------- waitlist / footer ---------- */
+  .waitlist{
+    background:var(--ink); color:var(--bone);
+    text-align:center;
+  }
+  .waitlist .eyebrow{ color:var(--rust); }
+  .waitlist h2{
+    font-size:clamp(34px,6vw,76px);
+    max-width:900px; margin:20px auto 30px;
+    line-height:1.02;
+  }
+  .waitlist p{ color:var(--stone); font-size:14px; max-width:460px; margin:0 auto 40px; line-height:1.8; }
+  .waitlist-form{
+    display:flex; max-width:460px; margin:0 auto;
+    border-bottom:1px solid var(--line-dark);
+    padding-bottom:14px;
+  }
+  .waitlist-form input{
+    flex:1; background:transparent; border:none; outline:none;
+    color:var(--bone); font-family:'Archivo',sans-serif; font-size:14px;
+    letter-spacing:0.02em;
+  }
+  .waitlist-form input::placeholder{ color:#8a8478; }
+  .waitlist-form button{
+    background:none; border:none; color:var(--bone);
+    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+    cursor:pointer;
+  }
+
+  footer{
+    background:var(--ink); color:var(--stone);
+    padding:56px 32px 34px;
+    border-top:1px solid var(--line-dark);
+  }
+  .footer-inner{
+    max-width:1400px; margin:0 auto;
+    display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:20px;
+  }
+  .footer-links{ display:flex; gap:28px; flex-wrap:wrap; }
+  .footer-links a{ font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--stone); }
+  .footer-links a:hover{ color:var(--bone); }
+  .footer-bottom{
+    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.08em;
+    color:#6b6559; text-transform:uppercase;
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 900px){
+    .nav-links{ display:none; }
+    section{ padding:80px 20px; }
+    .spotlight{ grid-template-columns:1fr; }
+    .spotlight-alt .spotlight-media{ order:1; }
+    .spotlight-alt .spotlight-copy{ order:2; }
+    .spotlight-media{ min-height:420px; }
+    .spotlight-copy{ padding:52px 26px; }
+    .craft-grid{ grid-template-columns:1fr; gap:44px; }
+    .hero-content{ flex-direction:column; align-items:flex-start; }
+    .hero-meta{ text-align:left; }
+    .ethos-grid{ grid-template-columns:1fr; }
+    .ethos-card{ border-right:none; border-bottom:1px solid var(--line); padding:32px 0; }
+    .ethos-card:nth-child(2){ padding-left:0; }
+    .ethos-card:nth-child(3){ padding-left:0; }
+    .ethos-card:last-child{ border-bottom:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ticker-wrap">
+  <div class="ticker" id="tickerTrack"></div>
+</div>
+
+<header>
+  <nav>
+    <div class="wordmark">KENNCEPTUAL</div>
+    <div class="nav-links">
+      <a href="#spotlight">Shop</a>
+      <a href="#craft">Craft</a>
+      <a href="#ethos">Ethos</a>
+      <a href="#waitlist">Waitlist</a>
+      <a href="#footer">Stockists</a>
+    </div>
+    <div class="nav-right">
+      <a href="#waitlist" class="buckle-btn">Join Waitlist</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" style="padding:0;">
+  <img src="hero-belt.jpg" alt="Kennceptual leopard calf hair belt, hand cut with black hardware">
+  <div class="scroll-cue">Scroll</div>
+  <div class="hero-content">
+    <div>
+      <span class="eyebrow">Drop 001 — Limited Run</span>
+      <h1>The Leopard<br>Belt.</h1>
+    </div>
+    <div class="hero-meta">
+      Calf Hair Leopard<br>
+      Full Grain Backing<br>
+      Hand Cut — Made To Order
+    </div>
+  </div>
+</section>
+
+<section id="spotlight">
+  <div class="inner">
+    <div class="section-head">
+      <h2>Small Batch.<br>No Compromises.</h2>
+      <p>Kennceptual isn't a catalog — it's a handful of pieces, each refined until there was nothing left to take away. This is the capsule so far.</p>
+    </div>
+  </div>
+
+  <div class="spotlight">
+    <div class="spotlight-media">
+      <img src="belt-detail.jpg" alt="Detail of leopard calf hair belt with black and silver buckle hardware">
+    </div>
+    <div class="spotlight-copy">
+      <span class="eyebrow">001 / Leopard Calf Hair</span>
+      <h3>The Kennceptual Belt</h3>
+      <p class="desc">Cut from a single hide of genuine calf hair leopard, backed in full-grain black leather and finished by hand. Every belt is numbered — no two spot patterns repeat.</p>
+
+      <ul class="spec-list">
+        <li><span>Material</span><span>Calf Hair Leopard / Full Grain</span></li>
+        <li><span>Hardware</span><span>Solid Cast, PVD Finish</span></li>
+        <li><span>Width</span><span>1.5"</span></li>
+        <li><span>Origin</span><span>Cut &amp; Assembled In-House</span></li>
+        <li><span>Edition</span><span>Numbered, Limited Run</span></li>
+      </ul>
+
+      <div class="swatches">
+        <span class="label">Hardware</span>
+        <div class="swatch silver active" title="Silver"></div>
+        <div class="swatch black" title="Black PVD"></div>
+        <div class="swatch brass" title="Brass"></div>
+      </div>
+
+      <div class="price-row" style="margin-top:30px;">
+        <span class="price">$285.00</span>
+        <button class="hw-btn">Reserve Yours</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="spotlight spotlight-alt">
+    <div class="spotlight-media">
+      <img src="pants-yoke-back.jpg" alt="Back view of calf skin workman leather pants showing goat suede yoke and patch pockets">
+    </div>
+    <div class="spotlight-copy">
+      <span class="eyebrow">002 / Calf Skin Workman</span>
+      <h3>The Workman Pant</h3>
+      <p class="desc">A wide leg boot cut with a slight flare at the opening, cut from full calf skin and left unlined so the leather breaks in on its own terms. Made to order — every pair is cut after you commit to a size.</p>
+
+      <ul class="spec-list">
+        <li><span>Material</span><span>Calf Skin Leather</span></li>
+        <li><span>Fit</span><span>Wide Leg, Boot Cut, Slight Flare</span></li>
+        <li><span>Yoke</span><span>Goat Suede</span></li>
+        <li><span>Lining</span><span>Unlined</span></li>
+        <li><span>Sizing</span><span>Pre-Order, Sizes 30–40</span></li>
+        <li><span>Lead Time</span><span>10–16 Days After Order</span></li>
+      </ul>
+
+      <div class="swatches" style="flex-wrap:wrap;">
+        <span class="label">Size</span>
+        <span class="size-pill">30</span>
+        <span class="size-pill">32</span>
+        <span class="size-pill">34</span>
+        <span class="size-pill active">36</span>
+        <span class="size-pill">38</span>
+        <span class="size-pill">40</span>
+      </div>
+
+      <div class="price-row" style="margin-top:30px;">
+        <span class="price" style="font-size:20px;">Pre-Order — Ships In 10–16 Days</span>
+        <button class="hw-btn">Reserve Your Size</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="spotlight">
+    <div class="spotlight-media">
+      <img src="hoody-front.jpg" alt="Kenn calfskin leather hoody, genuine top grain leather, front view">
+    </div>
+    <div class="spotlight-copy">
+      <span class="eyebrow">003 / Top Grain Calfskin</span>
+      <h3>The Kenn Hoody</h3>
+      <p class="desc">Genuine top grain calfskin cut into a hooded bomber, lined in silk and vented for movement. Built to layer over anything else in the capsule without adding bulk.</p>
+
+      <ul class="spec-list">
+        <li><span>Material</span><span>Genuine Top Grain Leather</span></li>
+        <li><span>Lining</span><span>Silk, Vented</span></li>
+        <li><span>Closure</span><span>Full Zip, Ribbed Hem &amp; Cuffs</span></li>
+        <li><span>Sizing</span><span>Pre-Order, Small – X-Large</span></li>
+        <li><span>Lead Time</span><span>10–16 Days After Order</span></li>
+      </ul>
+
+      <div class="swatches" style="flex-wrap:wrap;">
+        <span class="label">Size</span>
+        <span class="size-pill">S</span>
+        <span class="size-pill active">M</span>
+        <span class="size-pill">L</span>
+        <span class="size-pill">XL</span>
+      </div>
+
+      <div class="price-row" style="margin-top:30px;">
+        <span class="price" style="font-size:20px;">Pre-Order — Ships In 10–16 Days</span>
+        <button class="hw-btn">Reserve Your Size</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="spotlight spotlight-alt">
+    <div class="spotlight-media">
+      <img src="jacket-front.jpg" alt="Nana Kwame Noir jacket, black calfskin leather with silver YKK zip, front view">
+    </div>
+    <div class="spotlight-copy">
+      <span class="eyebrow">004 / Black Calfskin</span>
+      <h3>Nana Kwame Noir Jacket</h3>
+      <p class="desc">A clean collared zip-up cut from genuine black calfskin and lined in silk. Polished silver YKK hardware runs the front and pockets — understated until you look twice.</p>
+
+      <ul class="spec-list">
+        <li><span>Material</span><span>Black Calfskin Genuine Leather</span></li>
+        <li><span>Lining</span><span>Silk</span></li>
+        <li><span>Hardware</span><span>Polished Silver YKK Zippers</span></li>
+        <li><span>Sizing</span><span>Pre-Order, Small – X-Large</span></li>
+        <li><span>Lead Time</span><span>10–16 Days After Order</span></li>
+      </ul>
+
+      <div class="swatches" style="flex-wrap:wrap;">
+        <span class="label">Size</span>
+        <span class="size-pill">S</span>
+        <span class="size-pill active">M</span>
+        <span class="size-pill">L</span>
+        <span class="size-pill">XL</span>
+      </div>
+
+      <div class="price-row" style="margin-top:30px;">
+        <span class="price" style="font-size:20px;">Pre-Order — Ships In 10–16 Days</span>
+        <button class="hw-btn">Reserve Your Size</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="prong-divider"><span></span><span></span><span></span><span></span><span></span></div>
+
+<section class="craft" id="craft">
+  <div class="inner">
+    <div class="craft-grid">
+      <div>
+        <span class="craft-index">— Process</span>
+        <h2>Built the way hardware is built. Not the way fashion usually is.</h2>
+        <p>Every piece starts as raw hide, not a print file or a bolt of fabric off a shelf. We cut around the leather's own flaws instead of hiding them — which is why no two pieces leave the shop looking exactly the same.</p>
+        <p>The hardware and stitch work are what people touch the most, so they're what we obsess over: solid, not stamped, finished to sit flush with zero play.</p>
+
+        <div class="craft-marks">
+          <div class="craft-mark">
+            <span class="num">01</span>
+            <span class="lbl">Hide Selection</span>
+          </div>
+          <div class="craft-mark">
+            <span class="num">02</span>
+            <span class="lbl">Hand Cut &amp; Bound</span>
+          </div>
+          <div class="craft-mark">
+            <span class="num">03</span>
+            <span class="lbl">Hardware Set</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="craft-visual">
+        <img src="hoody-hood.jpg" alt="Detail of hood construction and stitching on Kenn calfskin leather hoody">
+        <span class="tag">Hand Finished — No.003</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="prong-divider"><span></span><span></span><span></span><span></span><span></span></div>
+
+<section class="ethos" id="ethos">
+  <div class="inner">
+    <div class="section-head">
+      <h2>What We're<br>Built On.</h2>
+      <p>Three things guide every piece that leaves the shop — not slogans, just how we work.</p>
+    </div>
+
+    <div class="ethos-grid">
+      <div class="ethos-card">
+        <span class="ethos-num">01</span>
+        <span class="eyebrow">Values</span>
+        <h3>Quality &amp; Efficiency</h3>
+        <p>We push both at once — never trading one for the other. Every piece is held to the same standard: built right, and built to last. Excellence isn't the goal, it's the baseline.</p>
+      </div>
+
+      <div class="ethos-card">
+        <span class="ethos-num">02</span>
+        <span class="eyebrow">Purpose</span>
+        <h3>Made to Be Remembered</h3>
+        <p>We're not chasing volume. We're building a name people remember for great custom creations — work that outlasts the trend it was made in.</p>
+      </div>
+
+      <div class="ethos-card">
+        <span class="ethos-num">03</span>
+        <span class="eyebrow">Personality</span>
+        <h3>If We Can Envision It, We Can Create It</h3>
+        <p>No idea gets shut down for being difficult. If it can be imagined, it can be cut, cast, stitched, and built — that's the standard we hold ourselves to.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="waitlist" id="waitlist">
+  <div class="inner">
+    <span class="eyebrow">Restocking Soon</span>
+    <h2>Drop 001 sold through in nine days. Drop 002 won't last longer.</h2>
+    <p>Leave your email and we'll notify you the moment the next run of belts is cut — before it's posted anywhere else.</p>
+    <form class="waitlist-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Added ✓';">
+      <input type="email" placeholder="Email address" required>
+      <button type="submit">Notify Me</button>
+    </form>
+  </div>
+</section>
+
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="wordmark" style="font-size:16px;">KENNCEPTUAL</div>
+    <div class="footer-links">
+      <a href="#spotlight">Shop</a>
+      <a href="#craft">Craft</a>
+      <a href="#ethos">Ethos</a>
+      <a href="#">Stockists</a>
+      <a href="#">Instagram</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+  <div class="footer-inner" style="margin-top:28px;">
+    <span class="footer-bottom">© 2026 Kennceptual — Hand Cut, Numbered Goods</span>
+  </div>
+</footer>
+
+<script>
+  const specs = [
+    "CALF HAIR LEOPARD","FULL GRAIN BACKING","SOLID CAST HARDWARE","HAND CUT & NUMBERED",
+    "LIMITED RUN — DROP 001","NO TWO ALIKE"
+  ];
+  const track = document.getElementById('tickerTrack');
+  const build = () => specs.map((s,i)=>`<span class="${i%2===0?'mark':''}">${s}</span>`).join('');
+  track.innerHTML = build() + build();
+
+  // hardware swatch toggle
+  document.querySelectorAll('.swatch').forEach(sw=>{
+    sw.addEventListener('click', ()=>{
+      document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('active'));
+      sw.classList.add('active');
+    });
+  });
+
+  // size pill toggle
+  document.querySelectorAll('.spotlight-copy').forEach(block=>{
+    const pills = block.querySelectorAll('.size-pill');
+    pills.forEach(p=>{
+      p.addEventListener('click', ()=>{
+        pills.forEach(x=>x.classList.remove('active'));
+        p.classList.add('active');
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
